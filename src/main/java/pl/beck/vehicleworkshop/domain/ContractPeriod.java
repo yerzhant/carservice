@@ -1,8 +1,11 @@
 package pl.beck.vehicleworkshop.domain;
 
+import lombok.Getter;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Getter
 class ContractPeriod {
 
     private final LocalDate validFrom;
@@ -18,7 +21,7 @@ class ContractPeriod {
             throw new IllegalArgumentException("Date validTo must be after validFrom!");
     }
 
-    static ContractPeriod of(final LocalDate validFrom, final LocalDate validTo) {
+    static ContractPeriod from(final LocalDate validFrom, final LocalDate validTo) {
         return new ContractPeriod(validFrom, validTo);
     }
 
