@@ -17,3 +17,15 @@ Historia do zaimplementowania w systemie.
 Mamy tu kontrakt z klientem (wynajmujący auta). Kontrakt określa limity i ceny za naprawy (jakieś typy napraw).
 Naprawy są wykonywane w ramach zlecenia. Podczas zamykania zlecenia pracownik warsztatu podaje wykonane naprawy.
 Wykonane naprawy pomniejszają dostępne bezpłatne naprawy, te zapisane w kontrakcie.
+
+
+
+
+TODO:
+
+ + rozszerzyc model domenowy
+ + dopisac brakujaca logike i testy
+ + zastanowic sie nad klasami ContractFreeRepair, ContractPaidRepair - moze wspolna klasa z polem typ
+ + zastanowic sie nad bouded contextami (strategic patterns z ddd) (Wtedy klasy beda w pakietach i brak package scope?)
+ + czy interfejsy repo nie zrobic jako public i w infrastructure miec implementacje JPA...
+ + brak endpointow
