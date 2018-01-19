@@ -1,4 +1,4 @@
-package pl.beck.vehicleworkshop.vehiclecatalog.domain.protocol;
+package pl.beck.vehicleworkshop.publishedlanguage;
 
 import lombok.Value;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;

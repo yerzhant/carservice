@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.commandmodel.AddNewVehicleRequestDto;
-import pl.beck.vehicleworkshop.vehiclecatalog.domain.protocol.VehicleData;
+import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
 
 @RequiredArgsConstructor
 @Slf4j

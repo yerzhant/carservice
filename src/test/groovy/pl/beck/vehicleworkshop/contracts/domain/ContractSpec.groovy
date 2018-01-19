@@ -7,7 +7,7 @@ import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber
 import pl.beck.vehicleworkshop.sharedkernel.Money
-import pl.beck.vehicleworkshop.vehiclecatalog.domain.protocol.VehicleData
+import pl.beck.vehicleworkshop.publishedlanguage.VehicleData
 
 import static pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto.GuaranteedRepairDto
 import static pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto.PaidRepairDto

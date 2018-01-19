@@ -11,7 +11,7 @@ import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import pl.beck.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade;
 import pl.beck.vehicleworkshop.sharedkernel.Money;
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
-import pl.beck.vehicleworkshop.vehiclecatalog.domain.protocol.VehicleData;
+import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
 
 @RequiredArgsConstructor
 @Slf4j
