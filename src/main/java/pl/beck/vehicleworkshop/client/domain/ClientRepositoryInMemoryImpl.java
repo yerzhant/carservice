@@ -46,6 +46,11 @@ class ClientRepositoryInMemoryImpl implements ClientRepository {
     }
 
     @Override
+    public Client findByPersonalNumberOrThrow(final String personalNumber) {
+        return findByPersonalNumber(personalNumber).orElseThrow(ClientNotFoundException::new);
+    }
+
+    @Override
     public Optional<Client> findByPersonalNumber(final String personalNumber) {
         return clients.entrySet().stream()
                 .filter(e -> e.getValue().getPersonalNumber().equals(personalNumber))

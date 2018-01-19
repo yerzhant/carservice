@@ -10,6 +10,8 @@ interface ClientRepository {
 
     Client findOneOrThrow(Long id);
 
+    Client findByPersonalNumberOrThrow(String personalNumber);
+
     Optional<Client> findByPersonalNumber(String personalNumber);
 
     void delete(Client client);

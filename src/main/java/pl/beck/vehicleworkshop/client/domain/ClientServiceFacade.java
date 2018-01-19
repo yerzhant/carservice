@@ -29,12 +29,7 @@ public class ClientServiceFacade {
 
     public ClientData fetchClientData(String personalNumber) {
         log.info("fetch client data by personalNumber {}", personalNumber);
-        final Client client = getByPersonalNumberOrThrowException(personalNumber);
+        final Client client = clientRepository.findByPersonalNumberOrThrow(personalNumber);
         return client.getSnapshot();
-    }
-
-    private Client getByPersonalNumberOrThrowException(final String personalNumber) {
-        return clientRepository.findByPersonalNumber(personalNumber).orElseThrow(() ->
-                new DomainException("Client with given personal number not exists!"));
     }
 }
