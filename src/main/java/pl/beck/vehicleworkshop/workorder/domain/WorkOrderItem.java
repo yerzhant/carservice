@@ -11,4 +11,7 @@ class WorkOrderItem extends BaseEntity {
 
     private RepairServiceCatalogData repairServiceCatalog;
 
+    WorkOrderItem(final RepairServiceCatalogData repairServiceCatalog) {
+        this.repairServiceCatalog = repairServiceCatalog;
+    }
 }

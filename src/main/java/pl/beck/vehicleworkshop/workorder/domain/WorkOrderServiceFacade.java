@@ -8,6 +8,7 @@ import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractData;
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
+import pl.beck.vehicleworkshop.publishedlanguage.WorkOrderData;
 import pl.beck.vehicleworkshop.publishedlanguage.WorkerData;
 import pl.beck.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade;
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
@@ -25,7 +26,6 @@ public class WorkOrderServiceFacade {
     private final VehicleServiceFacade vehicleServiceFacade;
     private final WorkersRegistryServiceFacade workersRegistryServiceFacade;
     private final RepairsCatalogServiceFacade repairsCatalogServiceFacade;
-
     private final ContractServiceFacade contractServiceFacade;
 
     private final WorkOrderRepository workOrderRepository;
@@ -57,7 +57,6 @@ public class WorkOrderServiceFacade {
 
     public void addRepairToOrder(String repairServiceCatalogNumber, String workOrderNumber) {
 
-        RepairServiceCatalogData repairServiceCatalogData = repairsCatalogServiceFacade.fetchByCatalogNumber(repairServiceCatalogNumber);
         WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
         ClientData clientData = workOder.getClientData();
 
@@ -65,13 +64,33 @@ public class WorkOrderServiceFacade {
         String vin = workOder.getVehicleData().getVin().getVin();
         LocalDate day = workOder.getCreationTime().toLocalDate();
 
+        RepairServiceCatalogData repairServiceCatalogData = repairsCatalogServiceFacade.fetchByCatalogNumber(repairServiceCatalogNumber);
         ContractData contractData = contractServiceFacade.fetchContractDataByPersonalNumberAndVin(clientPersonalNumber, vin, day, day);
+
+        workOder.addRepair(repairServiceCatalogData, contractData);
+        workOrderRepository.save(workOder);
+
+        final String contractNumber = contractData.getContractNumber().getNumber();
+        final String serviceCatalogNumber = repairServiceCatalogData.getRepairServiceCatalogNumber().getNumber();
+
+        contractServiceFacade.markGuaranteedRepairAsUsed(contractNumber, serviceCatalogNumber, workOrderNumber); // TODO dwa agregaty per transakacja !!!
+    }
+
+    public void closeOrder(String workOrderNumber) {
+        WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
+
+        workOder.close();
+
+        workOrderRepository.save(workOder);
 
     }
 
+    public WorkOrderData fetchWorkOrderDataByNumber(String workOrderNumber) {
+        return workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber).getSnapshot();
+    }
 
     public WorkOrderResponseDto fetchWorkOrderResponseByNumber(String workOrderNumber) {
-        final WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
+        WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
         return workOderMapper.mapToDto(workOder);
     }
 }

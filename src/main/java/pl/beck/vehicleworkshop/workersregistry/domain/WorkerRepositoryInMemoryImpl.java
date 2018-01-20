@@ -24,13 +24,15 @@ class WorkerRepositoryInMemoryImpl implements WorkerRepository {
             findByPersonalNumber(worker.getPersonalNumber()).ifPresent(c -> {
                 throw new RuntimeException("Duplicated personalNumber");
             });
-        }
 
-        final long id = atomicLong.getAndIncrement();
-        final Field id1 = ReflectionUtils.findField(worker.getClass(), "id");
-        ReflectionUtils.makeAccessible(id1);
-        ReflectionUtils.setField(id1, worker, id);
-        workers.put(worker.getId(), worker);
+            final long id = atomicLong.getAndIncrement();
+            final Field id1 = ReflectionUtils.findField(worker.getClass(), "id");
+            ReflectionUtils.makeAccessible(id1);
+            ReflectionUtils.setField(id1, worker, id);
+            workers.put(worker.getId(), worker);
+        } else {
+            workers.put(worker.getId(), worker);
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@ public class WorkOrderNumber {
 
     private final String number;
 
-    private WorkOrderNumber(String number) {
+    public WorkOrderNumber(String number) {
         this.number = number;
     }
 

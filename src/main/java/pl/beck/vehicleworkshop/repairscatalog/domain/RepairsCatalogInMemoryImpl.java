@@ -21,11 +21,15 @@ class RepairsCatalogInMemoryImpl implements RepairsCatalogRepository {
     @Override
     public void save(RepairsCatalog repairsCatalog) {
         Objects.requireNonNull(repairsCatalog);
-        final long id = atomicLong.getAndIncrement();
-        final Field id1 = ReflectionUtils.findField(repairsCatalog.getClass(), "id");
-        ReflectionUtils.makeAccessible(id1);
-        ReflectionUtils.setField(id1, repairsCatalog, id);
-        catalog.put(id, repairsCatalog);
+        if (repairsCatalog.getId() == null) {
+            final long id = atomicLong.getAndIncrement();
+            final Field id1 = ReflectionUtils.findField(repairsCatalog.getClass(), "id");
+            ReflectionUtils.makeAccessible(id1);
+            ReflectionUtils.setField(id1, repairsCatalog, id);
+            catalog.put(repairsCatalog.getId(), repairsCatalog);
+        } else {
+            catalog.put(repairsCatalog.getId(), repairsCatalog);
+        }
     }
 
     @Override

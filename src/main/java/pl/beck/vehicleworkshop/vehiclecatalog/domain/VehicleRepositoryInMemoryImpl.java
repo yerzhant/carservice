@@ -27,14 +27,18 @@ class VehicleRepositoryInMemoryImpl implements VehicleRepository {
             findByVin(vehicle.getVin().getValue()).ifPresent(v -> {
                 throw new DuplicatedVinException();
             });
+
+
+            final long id = atomicLong.getAndIncrement();
+
+            final Field id1 = ReflectionUtils.findField(vehicle.getClass(), "id");
+            ReflectionUtils.makeAccessible(id1);
+            ReflectionUtils.setField(id1, vehicle, id);
+            vehicles.put(vehicle.getId(), vehicle);
+        } else {
+            vehicles.put(vehicle.getId(), vehicle);
         }
 
-        final long id = atomicLong.getAndIncrement();
-
-        final Field id1 = ReflectionUtils.findField(vehicle.getClass(), "id");
-        ReflectionUtils.makeAccessible(id1);
-        ReflectionUtils.setField(id1, vehicle, id);
-        vehicles.put(vehicle.getId(), vehicle);
     }
 
     @Override

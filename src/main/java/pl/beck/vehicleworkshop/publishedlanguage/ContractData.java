@@ -1,10 +1,14 @@
 package pl.beck.vehicleworkshop.publishedlanguage;
 
+import lombok.Getter;
 import lombok.Value;
 import pl.beck.vehicleworkshop.sharedkernel.Money;
 
+import javax.persistence.Embeddable;
 import java.util.List;
 
+@Embeddable
+@Getter
 @Value
 public class ContractData {
 
@@ -16,12 +20,20 @@ public class ContractData {
 
     private final List<Repair> repairs;
 
-    public static Repair createGuaranteedRepair(ContractNumber contractNumber, RepairServiceCatalogNumber catalogNumber) {
-        return Repair.paid(contractNumber, catalogNumber);
+    public ContractData(final String clientPersonalNumber, final String vin, final ContractNumber contractNumber,
+                        final List<Repair> repairs) {
+        this.clientPersonalNumber = clientPersonalNumber;
+        this.vin = vin;
+        this.contractNumber = contractNumber;
+        this.repairs = repairs;
     }
 
-    public static Repair createPaidRepair(ContractNumber contractNumber, Money negotiatedPrice, RepairServiceCatalogNumber catalogNumbe) {
-        return Repair.guaranteed(contractNumber, negotiatedPrice, catalogNumbe);
+    public static Repair createPaidRepair(ContractNumber contractNumber, Money negotiatedPrice, RepairServiceCatalogNumber catalogNumber) {
+        return Repair.paid(contractNumber, negotiatedPrice, catalogNumber);
+    }
+
+    public static Repair createGuaranteedPaidRepair(ContractNumber contractNumber, RepairServiceCatalogNumber catalogNumber, boolean used) {
+        return Repair.guaranteed(contractNumber, catalogNumber, used);
     }
 
     @Value
@@ -33,14 +45,16 @@ public class ContractData {
 
         private boolean guaranteed;
 
+        private Boolean used;
+
         private final Money negotiatedPrice;
 
-        static Repair paid(ContractNumber contractNumber, RepairServiceCatalogNumber catalogNumber) {
-            return new Repair(contractNumber,catalogNumber);
+        static Repair paid(ContractNumber contractNumber, Money negotiatedPrice, RepairServiceCatalogNumber catalogNumber) {
+            return new Repair(contractNumber, negotiatedPrice, catalogNumber);
         }
 
-        static Repair guaranteed(ContractNumber contractNumber, Money negotiatedPrice, RepairServiceCatalogNumber catalogNumber) {
-            return new Repair(contractNumber, negotiatedPrice, catalogNumber);
+        static Repair guaranteed(ContractNumber contractNumber, RepairServiceCatalogNumber catalogNumber, boolean used) {
+            return new Repair(contractNumber, catalogNumber, used);
         }
 
         private Repair(ContractNumber contractNumber, Money negotiatedPrice, RepairServiceCatalogNumber catalogNumber) {
@@ -48,19 +62,25 @@ public class ContractData {
             this.catalogNumber = catalogNumber;
             this.guaranteed = false;
             this.negotiatedPrice = negotiatedPrice;
+            this.used = null;
         }
 
-        private Repair(ContractNumber contractNumber, RepairServiceCatalogNumber catalogNumber) {
+        private Repair(ContractNumber contractNumber, RepairServiceCatalogNumber catalogNumber, boolean used) {
             this.contractNumber = contractNumber;
             this.catalogNumber = catalogNumber;
             this.guaranteed = true;
-            negotiatedPrice = null;
+            this.negotiatedPrice = null;
+            this.used = used;
         }
 
         public Money getNegotiatedPrice() {
             if(guaranteed)
                 throw new UnsupportedOperationException("Can not call this method for guaranteed repair");
             return negotiatedPrice;
+        }
+
+        private boolean isUsed() {
+            return used;
         }
     }
 
@@ -88,3 +108,4 @@ public class ContractData {
         return result;
     }
 }
+//TODO zbyt wiele zachowania w tym obiekcie... zastanowic sie czy ma on jaki kolwiek sens...

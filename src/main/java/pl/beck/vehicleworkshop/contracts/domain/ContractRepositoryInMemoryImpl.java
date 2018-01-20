@@ -23,11 +23,16 @@ class ContractRepositoryInMemoryImpl implements ContractRepository {
     @Override
     public void save(Contract contract) {
         Objects.requireNonNull(contract);
-        long id = atomicLong.getAndIncrement();
-        Field id1 = ReflectionUtils.findField(contract.getClass(), "id");
-        ReflectionUtils.makeAccessible(id1);
-        ReflectionUtils.setField(id1, contract, id);
-        contracts.put(id, contract);
+        if(contract.getId() == null) {
+            long id = atomicLong.getAndIncrement();
+            Field id1 = ReflectionUtils.findField(contract.getClass(), "id");
+            ReflectionUtils.makeAccessible(id1);
+            ReflectionUtils.setField(id1, contract, id);
+            contracts.put(contract.getId(), contract);
+        } else {
+            contracts.put(contract.getId(), contract);
+        }
+
     }
 
     @Override

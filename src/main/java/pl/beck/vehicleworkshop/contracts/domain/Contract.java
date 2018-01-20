@@ -5,7 +5,9 @@ import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
+import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
+import pl.beck.vehicleworkshop.publishedlanguage.WorkOrderNumber;
 import pl.beck.vehicleworkshop.sharedkernel.BaseEntity;
 import pl.beck.vehicleworkshop.sharedkernel.Money;
 
@@ -52,11 +54,13 @@ class Contract extends BaseEntity {
         List<ContractData.Repair> repairs = new ArrayList<>();
 
         repairs.addAll(getGuaranteedRepairs().stream()
-                .map(gr -> ContractData.createGuaranteedRepair(contractNumber, gr.getRepairServiceCatalogNumber()))
+                .map(pr -> ContractData.createGuaranteedPaidRepair(contractNumber, pr.getRepairServiceCatalogNumber(), pr.isUsed()))
                 .collect(Collectors.toList()));
+
         repairs.addAll(getPaidRepairs().stream()
-                .map(pr -> ContractData.createPaidRepair(contractNumber, pr.getNegotiatedPrice(), pr.getRepairServiceCatalogNumber()))
+                .map(gr -> ContractData.createPaidRepair(contractNumber,gr.getNegotiatedPrice(), gr.getRepairServiceCatalogNumber()))
                 .collect(Collectors.toList()));
+
 
         return new ContractData(clientData.getPersonalNumber(), vin.getValue(), contractNumber, repairs);
     }
@@ -80,6 +84,14 @@ class Contract extends BaseEntity {
         this.paidRepairs.add(new PaidRepair(repairServiceCatalog, negotiatedPrice));
     }
 
+    void markGuaranteedRepairAsUsed(RepairServiceCatalogNumber repairServiceCatalogNumber,
+                                    WorkOrderNumber workOrderNumber) {
+        final GuaranteedRepair guaranteedRepair = guaranteedRepairs.stream()
+                .filter(r -> r.getRepairServiceCatalogNumber().equals(repairServiceCatalogNumber))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Contact does not contains given repair!"));
+        guaranteedRepair.markAsUsed(workOrderNumber);
+    }
 
     Set<GuaranteedRepair> getGuaranteedRepairs() {
         return Collections.unmodifiableSet(guaranteedRepairs);

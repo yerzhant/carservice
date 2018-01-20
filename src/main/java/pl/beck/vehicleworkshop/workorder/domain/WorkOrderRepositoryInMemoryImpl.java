@@ -19,11 +19,16 @@ class WorkOrderRepositoryInMemoryImpl implements WorkOrderRepository {
     @Override
     public void save(final WorkOder workOder) {
         Objects.requireNonNull(workOder);
-        final long id = atomicLong.getAndIncrement();
-        final Field id1 = ReflectionUtils.findField(workOder.getClass(), "id");
-        ReflectionUtils.makeAccessible(id1);
-        ReflectionUtils.setField(id1, workOder, id);
-        orders.put(id, workOder);
+        if(workOder.getId() == null) {
+            final long id = atomicLong.getAndIncrement();
+            final Field id1 = ReflectionUtils.findField(workOder.getClass(), "id");
+            ReflectionUtils.makeAccessible(id1);
+            ReflectionUtils.setField(id1, workOder, id);
+            orders.put(id, workOder);
+        } else {
+            orders.put(workOder.getId(), workOder);
+        }
+
     }
 
     @Override

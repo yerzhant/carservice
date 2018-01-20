@@ -13,5 +13,5 @@ public class WorkOrderCreateRequestDto {
 
     private String vin;
 
-    private LocalDateTime created;
+    private LocalDateTime creationTime;
 }

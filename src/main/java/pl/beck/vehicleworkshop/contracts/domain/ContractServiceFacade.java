@@ -9,7 +9,9 @@ import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
+import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
+import pl.beck.vehicleworkshop.publishedlanguage.WorkOrderNumber;
 import pl.beck.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade;
 import pl.beck.vehicleworkshop.sharedkernel.Money;
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
@@ -68,6 +70,12 @@ public class ContractServiceFacade {
             throw new RuntimeException("Vehicle is rented by: " + c.getClientData());
         });
 
+    }
+
+    public void markGuaranteedRepairAsUsed(String contractNumber, String repairServiceCatalogNumber, String workOrderNumber) {
+        Contract contract = contractRepository.findByContractNumberOrThrow(contractNumber);
+        contract.markGuaranteedRepairAsUsed(new RepairServiceCatalogNumber(repairServiceCatalogNumber), new WorkOrderNumber(workOrderNumber));
+        contractRepository.save(contract);
     }
 
     public ClientContractResponseDto fetchClientContractResponseByNumber(String contractNumber) {

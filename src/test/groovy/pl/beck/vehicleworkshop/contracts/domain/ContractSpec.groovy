@@ -2,22 +2,14 @@ package pl.beck.vehicleworkshop.contracts.domain
 
 import pl.beck.vehicleworkshop.client.domain.ClientServiceFacade
 import pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto
-import pl.beck.vehicleworkshop.publishedlanguage.ClientData
-import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData
-import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber
-import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber
-import pl.beck.vehicleworkshop.sharedkernel.Money
-import pl.beck.vehicleworkshop.publishedlanguage.VehicleData
-
-import static pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto.GuaranteedRepairDto
-import static pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto.PaidRepairDto
-
-
 import pl.beck.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade
 import spock.lang.Specification
 
 import java.time.LocalDate
+
+import static pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto.GuaranteedRepairDto
+import static pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto.PaidRepairDto
 
 class ContractSpec extends Specification implements SampleClientData, SampleVehicleData, SampleRepairServiceCatalogData {
 
