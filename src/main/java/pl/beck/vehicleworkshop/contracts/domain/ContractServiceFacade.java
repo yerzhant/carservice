@@ -6,12 +6,16 @@ import pl.beck.vehicleworkshop.client.domain.ClientServiceFacade;
 import pl.beck.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto;
 import pl.beck.vehicleworkshop.contracts.domain.readmodel.ClientContractResponseDto;
 import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
+import pl.beck.vehicleworkshop.publishedlanguage.ContractData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
 import pl.beck.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade;
 import pl.beck.vehicleworkshop.sharedkernel.Money;
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -34,18 +38,18 @@ public class ContractServiceFacade {
 
         final String vin = request.getVin();
         final VehicleData vehicleData = vehicleServiceFacade.fetchVehicleData(vin);
-        checkVehicleCanBeRented(vehicleData);
+        checkVehicleCanBeRented(vin, request.getValidFrom(), request.getValidTo());
 
         final ContractNumber contractNumber = contractNumberGenerator.generate(clientData);
         final Money freeRepairsLimitPrice = new Money(request.getFreeRepairsLimitPrice());
 
-        ContractPeriod contractPeriod = ContractPeriod.from(request.getValidFrom(), request.getValidTo());
+        ContractPeriod contractPeriod = ContractPeriod.of(request.getValidFrom(), request.getValidTo());
 
         Contract contract = new Contract(contractNumber, clientData, vehicleData.getVin(), freeRepairsLimitPrice, contractPeriod);
 
         request.getGuaranteedRepairs().forEach(dto -> {
             RepairServiceCatalogData rd = repairsCatalogServiceFacade.fetchByCatalogNumber(dto.getCatalogNumber());
-            contract.addGuarantedRepair(rd);
+            contract.addGuaranteedRepair(rd);
         });
 
         request.getPaidRepairs().forEach(dto -> {
@@ -58,11 +62,19 @@ public class ContractServiceFacade {
         return contractMapper.mapToDto(contract);
     }
 
-    private void checkVehicleCanBeRented(VehicleData vehicleData) {
-        //TODO add logic
+    private void checkVehicleCanBeRented(String vin, LocalDate from, LocalDate to) {
+        Optional<Contract> contractOptional = contractRepository.findByVinForDates(vin, from, to);
+        contractOptional.ifPresent(c -> {
+            throw new RuntimeException("Vehicle is rented by: " + c.getClientData());
+        });
+
     }
 
-    public ClientContractResponseDto fetcClientContractResponseByNumber(String contractNumber) {
+    public ClientContractResponseDto fetchClientContractResponseByNumber(String contractNumber) {
         return contractMapper.mapToDto(contractRepository.findByContractNumberOrThrow(contractNumber));
+    }
+
+    public ContractData fetchContractDataByPersonalNumberAndVin(String personalNumber, String vin, LocalDate from, LocalDate to) {
+        return contractRepository.findByPersonalNumberAndVinForDateOrThrow(personalNumber, vin, from, to).getSnapshot();
     }
 }

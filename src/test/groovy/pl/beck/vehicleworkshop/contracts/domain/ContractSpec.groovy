@@ -19,7 +19,7 @@ import spock.lang.Specification
 
 import java.time.LocalDate
 
-class ContractSpec extends Specification {
+class ContractSpec extends Specification implements SampleClientData, SampleVehicleData, SampleRepairServiceCatalogData {
 
     ClientServiceFacade clientServiceFacade = Mock(ClientServiceFacade)
     VehicleServiceFacade vehicleServiceFacade = Mock(VehicleServiceFacade)
@@ -29,32 +29,34 @@ class ContractSpec extends Specification {
             .contractServiceFacade(clientServiceFacade, vehicleServiceFacade, repairsCatalogServiceFacade)
 
 
-    def "should sign new contract with existing client im system"() {
+    def "should sign new contract with existing client in system"() {
 
         given: "we have sign contract request data"
-        String personalNumber = "89110510433"
-        String vin = "1HGCR2F53EA275060"
+        String personalNumber = clientData.personalNumber
+        String vin = vehicleData.vin.vin
         String guaranteedRepairCatalogNumber = "AA/F/B/1"
         String paidRepairCatalogNumber = "BB/G/A/5"
         double freeRepairsLimitPrice = 1000
+        double negotiatedPrice = 50
+
 
         def request = SignContractWithClientRequestDto.builder()
-                .clientPersonalNumber(personalNumber)
-                .vin(vin)
+                .clientPersonalNumber(clientData.personalNumber)
+                .vin(vehicleData.vin.vin)
                 .validFrom(LocalDate.now().minusMonths(1))
                 .validTo(LocalDate.now().plusMonths(1))
                 .freeRepairsLimitPrice(freeRepairsLimitPrice)
                 .guaranteedRepairs(
                 [
                         GuaranteedRepairDto.builder()
-                                .catalogNumber(guaranteedRepairCatalogNumber)
+                                .catalogNumber(guaranteedRepairData.repairServiceCatalogNumber.number)
                                 .build()
                 ] as Set)
                 .paidRepairs(
                 [
                         PaidRepairDto.builder()
-                                .catalogNumber(paidRepairCatalogNumber)
-                                .negotiatedPrice(50)
+                                .catalogNumber(paidRepairData.repairServiceCatalogNumber.number)
+                                .negotiatedPrice(negotiatedPrice)
                                 .build()
 
 
@@ -63,29 +65,26 @@ class ContractSpec extends Specification {
 
 
         clientServiceFacade.fetchClientData(personalNumber) >> {
-            new ClientData(1L, personalNumber)
+            clientData
         }
 
         vehicleServiceFacade.fetchVehicleData(vin) >> {
-            new VehicleData(new VehicleIdentificationNumber(vin), "Opel", "Vectra", "PETROL")
+           vehicleData
         }
 
         repairsCatalogServiceFacade.fetchByCatalogNumber(guaranteedRepairCatalogNumber) >> {
-            new RepairServiceCatalogData(
-                    new RepairServiceCatalogNumber(guaranteedRepairCatalogNumber), new Money(30d))
+            guaranteedRepairData
         }
 
         repairsCatalogServiceFacade.fetchByCatalogNumber(paidRepairCatalogNumber) >> {
-            new RepairServiceCatalogData(
-                    new RepairServiceCatalogNumber(paidRepairCatalogNumber), new Money(60d))
+            paidRepairData
         }
 
         when: "we add contract"
         def response = contractServiceFacade.signContractWithClient(request)
 
-
         then: "system returns the contract we have added"
-        def response2 = contractServiceFacade.fetcClientContractResponseByNumber(response.getConractNumber())
+        def response2 = contractServiceFacade.fetchClientContractResponseByNumber(response.getConractNumber())
         response.conractNumber == response2.conractNumber
     }
 }

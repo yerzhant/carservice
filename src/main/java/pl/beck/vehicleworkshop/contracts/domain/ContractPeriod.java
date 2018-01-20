@@ -21,7 +21,15 @@ class ContractPeriod {
             throw new IllegalArgumentException("Date validTo must be after validFrom!");
     }
 
-    static ContractPeriod from(final LocalDate validFrom, final LocalDate validTo) {
+    boolean overlap(ContractPeriod contractPeriod) {
+        return contains(contractPeriod.validFrom) || contains(contractPeriod.validTo);
+    }
+
+    boolean contains(LocalDate day) {
+        return !day.isBefore(validFrom) && !day.isAfter(validTo);
+    }
+
+    static ContractPeriod of(LocalDate validFrom, LocalDate validTo) {
         return new ContractPeriod(validFrom, validTo);
     }
 
