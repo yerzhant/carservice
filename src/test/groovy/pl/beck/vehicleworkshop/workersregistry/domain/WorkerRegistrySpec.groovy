@@ -1,6 +1,5 @@
 package pl.beck.vehicleworkshop.workersregistry.domain
 
-import pl.beck.vehicleworkshop.client.domain.commandmodel.AddNewClientRequestDto
 import pl.beck.vehicleworkshop.workersregistry.domain.commandmodel.NewWorkerRequestDto
 import pl.beck.vehicleworkshop.workersregistry.domain.readmodel.WorkerResponseDataDto
 import spock.lang.Specification
