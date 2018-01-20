@@ -4,7 +4,6 @@ import lombok.Getter;
 import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
-import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
 import pl.beck.vehicleworkshop.sharedkernel.BaseEntity;
 import pl.beck.vehicleworkshop.sharedkernel.Money;

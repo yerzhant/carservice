@@ -8,10 +8,10 @@ import pl.beck.vehicleworkshop.contracts.domain.readmodel.ClientContractResponse
 import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
 import pl.beck.vehicleworkshop.publishedlanguage.ContractNumber;
 import pl.beck.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
+import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
 import pl.beck.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade;
 import pl.beck.vehicleworkshop.sharedkernel.Money;
 import pl.beck.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
-import pl.beck.vehicleworkshop.publishedlanguage.VehicleData;
 
 @RequiredArgsConstructor
 @Slf4j

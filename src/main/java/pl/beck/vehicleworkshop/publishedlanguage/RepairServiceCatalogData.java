@@ -12,5 +12,6 @@ public class RepairServiceCatalogData {
     private final RepairServiceCatalogNumber repairServiceCatalogNumber;
 
     private final Money listPrice;
-
 }
+
+// TODO dodac klucz bazodanowy... Long id;

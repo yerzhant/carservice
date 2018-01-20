@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import pl.beck.vehicleworkshop.client.domain.commandmodel.AddNewClientRequestDto;
 import pl.beck.vehicleworkshop.client.domain.readmodel.ClientDataResponseDto;
 import pl.beck.vehicleworkshop.publishedlanguage.ClientData;
-import pl.beck.vehicleworkshop.sharedkernel.DomainException;
 
 @RequiredArgsConstructor
 @Slf4j

@@ -2,7 +2,6 @@ package pl.beck.vehicleworkshop.client.domain;
 
 import org.springframework.util.ReflectionUtils;
 import pl.beck.vehicleworkshop.client.domain.exceptions.ClientNotFoundException;
-import pl.beck.vehicleworkshop.client.domain.exceptions.DuplicatedPersonalNumberException;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -24,7 +23,7 @@ class ClientRepositoryInMemoryImpl implements ClientRepository {
 
         if(client.getId() == null) {
             findByPersonalNumber(client.getPersonalNumber()).ifPresent(c -> {
-                throw new DuplicatedPersonalNumberException();
+                throw new RuntimeException("Duplicated personalNumber");
             });
         }
 

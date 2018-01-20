@@ -1,7 +1,6 @@
 package pl.beck.vehicleworkshop.publishedlanguage;
 
 import lombok.Value;
-import pl.beck.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
 
 import javax.persistence.Embeddable;
 
