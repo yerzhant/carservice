@@ -39,7 +39,8 @@ TODO:
  + Utworzyć odpowiednie adnotacje dla bytów domentowych np. Aggregate oraz technicznych
  + Wystawić interface do repo jako public w domenie.
  + Zaimplementować BC - invoice(invoicing)
- + Zdarzenia w obrębie jednego modułu nie mają sensu... (Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder)
+ + Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder
  + Poprawic implementacje zapisu repo w pamieci (Brak nadawania id dla encji w relacji)
  + Dodac JPA mapping
  + Klasy DomainException i BaseEntity nie powinny być w sharedkernel.
+ + Dodac event bus? Przekazanie eventu zamkniecia zlecenia do modulu faktorowania
