@@ -113,7 +113,7 @@ class WorkOrderSpec extends Specification implements SampleWorkOrderData {
         workOrderServiceFacade.closeOrder(workOrderNumber)
 
 
-        then:
+        then: "system has updated work order with status - CLOSED"
         def workOrderData = workOrderServiceFacade.fetchWorkOrderDataByNumber(workOrderNumber)
         workOrderData.status == "CLOSED"
 
