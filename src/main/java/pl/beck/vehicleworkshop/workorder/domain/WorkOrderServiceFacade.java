@@ -73,16 +73,18 @@ public class WorkOrderServiceFacade {
         final String contractNumber = contractData.getContractNumber().getNumber();
         final String serviceCatalogNumber = repairServiceCatalogData.getRepairServiceCatalogNumber().getNumber();
 
-        contractServiceFacade.markGuaranteedRepairAsUsed(contractNumber, serviceCatalogNumber, workOrderNumber); // TODO dwa agregaty per transakacja !!!
+        contractServiceFacade.markGuaranteedRepairAsUsed(contractNumber, serviceCatalogNumber, workOrderNumber);        // TODO dwa agregaty per transakacja !!! Event?
     }
 
     public void closeOrder(String workOrderNumber) {
         WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
-
         workOder.close();
-
         workOrderRepository.save(workOder);
+        emitIssueInvoiceEvent();
+    }
 
+    private void emitIssueInvoiceEvent() {
+        //TODO implement
     }
 
     public WorkOrderData fetchWorkOrderDataByNumber(String workOrderNumber) {
