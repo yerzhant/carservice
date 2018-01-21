@@ -1,11 +1,11 @@
 package example.vehicleworkshop.contracts.domain;
 
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
 import example.vehicleworkshop.sharedkernel.Money;
+import lombok.Getter;
 
 @Getter
 class PaidRepair extends BaseEntity {

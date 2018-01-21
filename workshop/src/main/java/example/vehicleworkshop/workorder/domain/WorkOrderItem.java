@@ -1,8 +1,8 @@
 package example.vehicleworkshop.workorder.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
+import lombok.Getter;
 
 @Getter
 class WorkOrderItem extends BaseEntity {

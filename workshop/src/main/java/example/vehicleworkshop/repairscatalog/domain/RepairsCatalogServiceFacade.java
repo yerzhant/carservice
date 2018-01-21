@@ -1,8 +1,8 @@
 package example.vehicleworkshop.repairscatalog.domain;
 
-import lombok.RequiredArgsConstructor;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import example.vehicleworkshop.repairscatalog.domain.commandmodel.AddNewServiceToCatalogRequestDto;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class RepairsCatalogServiceFacade {

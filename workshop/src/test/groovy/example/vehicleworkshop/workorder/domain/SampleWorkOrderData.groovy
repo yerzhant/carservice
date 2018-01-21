@@ -1,8 +1,8 @@
 package example.vehicleworkshop.workorder.domain
 
-import groovy.transform.CompileStatic
 import example.vehicleworkshop.publishedlanguage.*
 import example.vehicleworkshop.sharedkernel.Money
+import groovy.transform.CompileStatic
 
 import java.time.LocalDateTime
 

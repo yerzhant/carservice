@@ -25,7 +25,7 @@ public class WorkOrderData {
 
     private List<Item> items = new ArrayList<>();
 
-    void addItems(RepairServiceCatalogData repairServiceCatalog) {
+    public void addItems(RepairServiceCatalogData repairServiceCatalog) {
         items.add(createItem(repairServiceCatalog));
     }
 
@@ -34,7 +34,7 @@ public class WorkOrderData {
     }
 
     @Value
-    static class Item {
+    public static class Item {
         private RepairServiceCatalogData repairService;
     }
 

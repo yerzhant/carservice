@@ -1,10 +1,10 @@
 package example.vehicleworkshop.repairscatalog.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
 import example.vehicleworkshop.sharedkernel.Money;
+import lombok.Getter;
 
 import java.util.Objects;
 

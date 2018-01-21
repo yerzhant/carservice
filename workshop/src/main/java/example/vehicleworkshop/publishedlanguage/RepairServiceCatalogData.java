@@ -1,7 +1,7 @@
 package example.vehicleworkshop.publishedlanguage;
 
-import lombok.Value;
 import example.vehicleworkshop.sharedkernel.Money;
+import lombok.Value;
 
 import javax.persistence.Embeddable;
 

@@ -1,6 +1,5 @@
 package example.vehicleworkshop.workorder.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.ClientData;
 import example.vehicleworkshop.publishedlanguage.ContractData;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
@@ -9,6 +8,7 @@ import example.vehicleworkshop.publishedlanguage.WorkOrderData;
 import example.vehicleworkshop.publishedlanguage.WorkOrderNumber;
 import example.vehicleworkshop.publishedlanguage.WorkerData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -47,8 +47,10 @@ class WorkOder extends BaseEntity {
     }
 
     WorkOrderData getSnapshot() {
-        return new WorkOrderData(id, workOrderNumber,clientData.getPersonalNumber(), workerData.getPersonalNumber(),
+        final WorkOrderData workOrderData = new WorkOrderData(id, workOrderNumber, clientData.getPersonalNumber(), workerData.getPersonalNumber(),
                 vehicleData.getVin().getValue(), status.name());
+        items.forEach(item -> workOrderData.addItems(item.getRepairServiceCatalog()));
+        return workOrderData;
     }
 
     void assignWorker(WorkerData workerData) {
@@ -75,6 +77,16 @@ class WorkOder extends BaseEntity {
         status = WorkOrderStatus.CLOSED;
     }
 
+//    void close(WorkOrderCloseEventPublisher publisher) {
+//
+//        if(items.isEmpty()) {
+//            throw new UnsupportedOperationException("Order does not contains any repair");
+//        }
+//
+//        status = WorkOrderStatus.CLOSED;
+//        publisher.publishWorkOrderCloseEvent(new WorkOrderCloseEvent(getSnapshot()));
+//    }
+
 
     private void verifyClient(ContractData contractData) {
         if(!contractData.getClientPersonalNumber().equals(clientData.getPersonalNumber()))
@@ -95,6 +107,14 @@ class WorkOder extends BaseEntity {
             throw new IllegalArgumentException("Repair is not guaranteed - has been used!");
         }
     }
+
+//    private boolean isFree(RepairServiceCatalogData repairServiceCatalogData, ContractData contractData) {
+//        final ContractData.Repair repair = contractData.getRepairs().stream()
+//                .filter(r -> r.getCatalogNumber().equals(repairServiceCatalogData.getRepairServiceCatalogNumber()))
+//                .findFirst()
+//                .get();
+//        return repair.isFree();
+//    }
 
     private void canAssign() {
         if(status == WorkOrderStatus.CLOSED) {

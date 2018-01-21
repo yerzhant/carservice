@@ -1,7 +1,5 @@
 package example.vehicleworkshop.workorder.domain;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import example.vehicleworkshop.client.domain.ClientServiceFacade;
 import example.vehicleworkshop.contracts.domain.ContractServiceFacade;
 import example.vehicleworkshop.publishedlanguage.ClientData;
@@ -14,7 +12,10 @@ import example.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade
 import example.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
 import example.vehicleworkshop.workersregistry.domain.WorkersRegistryServiceFacade;
 import example.vehicleworkshop.workorder.domain.commandmodel.WorkOrderCreateRequestDto;
+import example.vehicleworkshop.workorder.domain.event.WorkOrderEventsPublisher;
 import example.vehicleworkshop.workorder.domain.readmodel.WorkOrderResponseDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 
@@ -28,6 +29,7 @@ public class WorkOrderServiceFacade {
     private final RepairsCatalogServiceFacade repairsCatalogServiceFacade;
     private final ContractServiceFacade contractServiceFacade;
 
+    private final WorkOrderEventsPublisher workOrderEventsPublisher;
     private final WorkOrderRepository workOrderRepository;
     private final WorkOderMapper workOderMapper;
 
@@ -80,11 +82,7 @@ public class WorkOrderServiceFacade {
         WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
         workOder.close();
         workOrderRepository.save(workOder);
-        emitIssueInvoiceEvent();
-    }
-
-    private void emitIssueInvoiceEvent() {
-        //TODO implement
+        workOrderEventsPublisher.publishWorkOrderCloseEvent(workOder.getSnapshot());
     }
 
     public WorkOrderData fetchWorkOrderDataByNumber(String workOrderNumber) {

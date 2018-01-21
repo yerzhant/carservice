@@ -1,10 +1,10 @@
 package example.vehicleworkshop.workersregistry.domain;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import example.vehicleworkshop.publishedlanguage.WorkerData;
 import example.vehicleworkshop.workersregistry.domain.commandmodel.NewWorkerRequestDto;
 import example.vehicleworkshop.workersregistry.domain.readmodel.WorkerResponseDataDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j

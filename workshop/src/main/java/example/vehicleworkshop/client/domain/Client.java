@@ -1,9 +1,9 @@
 package example.vehicleworkshop.client.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.client.domain.readmodel.ClientDataResponseDto;
 import example.vehicleworkshop.publishedlanguage.ClientData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
+import lombok.Getter;
 
 import java.util.Objects;
 

@@ -1,25 +1,33 @@
 package example.vehicleworkshop.workorder.domain
 
+import example.events.domain.EventBus
+import example.events.domain.EventSubscriber
 import example.vehicleworkshop.client.domain.ClientServiceFacade
 import example.vehicleworkshop.contracts.domain.ContractServiceFacade
+import example.vehicleworkshop.invoice.domain.event.WorkOrderCloseEventSubscriber
 import example.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade
 import example.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade
 import example.vehicleworkshop.workersregistry.domain.WorkersRegistryServiceFacade
 import example.vehicleworkshop.workorder.domain.commandmodel.WorkOrderCreateRequestDto
+import example.vehicleworkshop.workorder.domain.event.WorkOrderEventsPublisher
 import spock.lang.Specification
 
 class WorkOrderSpec extends Specification implements SampleWorkOrderData {
 
+    EventBus eventBus = EventBus.singletonDefaultBus()
 
     ClientServiceFacade clientServiceFacade = Stub(ClientServiceFacade)
     VehicleServiceFacade vehicleServiceFacade = Stub(VehicleServiceFacade)
     WorkersRegistryServiceFacade workersRegistryServiceFacade = Stub(WorkersRegistryServiceFacade)
     RepairsCatalogServiceFacade repairsCatalogServiceFacade = Stub(RepairsCatalogServiceFacade)
     ContractServiceFacade contractServiceFacade = Stub(ContractServiceFacade)
+    WorkOrderEventsPublisher workOrderEventsPublisher = Mock(WorkOrderEventsPublisher)
+    //WorkOrderEventsPublisher workOrderEventsPublisher = new WorkOrderEventsPublisher(eventBus)
+
 
     WorkOrderServiceFacade workOrderServiceFacade = new Configuration()
             .workOrderServiceFacade(clientServiceFacade, vehicleServiceFacade, workersRegistryServiceFacade,
-            repairsCatalogServiceFacade, contractServiceFacade,)
+            repairsCatalogServiceFacade, workOrderEventsPublisher, contractServiceFacade,)
 
     def setup() {
 
@@ -52,6 +60,10 @@ class WorkOrderSpec extends Specification implements SampleWorkOrderData {
         repairsCatalogServiceFacade.fetchByCatalogNumber(paidRepairCatalogNumber) >> {
             paidRepairData
         }
+
+        and: "Subscriber of order close events is working"
+        EventSubscriber eventSubscriber = new WorkOrderCloseEventSubscriber()
+        eventBus.register(eventSubscriber)
     }
 
     def "should register new order"() {
@@ -94,7 +106,7 @@ class WorkOrderSpec extends Specification implements SampleWorkOrderData {
     }
 
 
-    def "should register repairs and close order" () {
+    def "should register repairs and close order and emit event" () {
 
         given: "system has order with specified number and assigned worker"
         WorkOrderCreateRequestDto request = WorkOrderCreateRequestDto.builder()
@@ -113,9 +125,10 @@ class WorkOrderSpec extends Specification implements SampleWorkOrderData {
         workOrderServiceFacade.closeOrder(workOrderNumber)
 
 
-        then: "system has updated work order with status - CLOSED"
+        then: "system has updated work order with status - CLOSED and publish event"
         def workOrderData = workOrderServiceFacade.fetchWorkOrderDataByNumber(workOrderNumber)
         workOrderData.status == "CLOSED"
+        1 * workOrderEventsPublisher.publishWorkOrderCloseEvent(_)
 
     }
 }

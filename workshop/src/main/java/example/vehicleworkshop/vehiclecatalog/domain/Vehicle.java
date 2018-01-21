@@ -1,9 +1,9 @@
 package example.vehicleworkshop.vehiclecatalog.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.VehicleData;
 import example.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
+import lombok.Getter;
 
 @Getter
 class Vehicle extends BaseEntity {

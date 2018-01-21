@@ -1,6 +1,5 @@
 package example.vehicleworkshop.contracts.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.ClientData;
 import example.vehicleworkshop.publishedlanguage.ContractData;
 import example.vehicleworkshop.publishedlanguage.ContractNumber;
@@ -10,6 +9,7 @@ import example.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
 import example.vehicleworkshop.publishedlanguage.WorkOrderNumber;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
 import example.vehicleworkshop.sharedkernel.Money;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;

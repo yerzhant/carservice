@@ -1,7 +1,7 @@
 package example.vehicleworkshop.contracts.domain;
 
-import org.springframework.util.ReflectionUtils;
 import example.vehicleworkshop.contracts.domain.exceptions.ContractNotFoundException;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;

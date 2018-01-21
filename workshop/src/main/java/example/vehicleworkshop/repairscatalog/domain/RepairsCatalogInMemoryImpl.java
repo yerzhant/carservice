@@ -1,7 +1,7 @@
 package example.vehicleworkshop.repairscatalog.domain;
 
-import org.springframework.util.ReflectionUtils;
 import example.vehicleworkshop.repairscatalog.domain.exceptions.RepairCatalogNotFoundException;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;

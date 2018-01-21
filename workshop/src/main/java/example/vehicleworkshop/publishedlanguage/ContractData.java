@@ -1,8 +1,8 @@
 package example.vehicleworkshop.publishedlanguage;
 
+import example.vehicleworkshop.sharedkernel.Money;
 import lombok.Getter;
 import lombok.Value;
-import example.vehicleworkshop.sharedkernel.Money;
 
 import javax.persistence.Embeddable;
 import java.util.List;
@@ -79,8 +79,8 @@ public class ContractData {
             return negotiatedPrice;
         }
 
-        private boolean isUsed() {
-            return used;
+        public boolean isFree() {
+            return guaranteed && used == null;
         }
     }
 

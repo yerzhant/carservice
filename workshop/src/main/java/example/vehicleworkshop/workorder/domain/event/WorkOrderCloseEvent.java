@@ -1,19 +1,16 @@
 package example.vehicleworkshop.workorder.domain.event;
 
+import example.events.domain.Event;
 import example.vehicleworkshop.publishedlanguage.WorkOrderData;
 import lombok.Value;
 
-import java.util.UUID;
-
 @Value
-public class WorkOrderCloseEvent {
+public class WorkOrderCloseEvent extends Event {
 
-    private String eventUUID;
+    private final WorkOrderData workOrderData;
 
-    private WorkOrderData workOrderData;
-
-    public WorkOrderCloseEvent(WorkOrderData workOrderData) {
+    WorkOrderCloseEvent(WorkOrderData workOrderData) {
+        super(workOrderData.getId());
         this.workOrderData = workOrderData;
-        this.eventUUID = UUID.randomUUID().toString();
     }
 }

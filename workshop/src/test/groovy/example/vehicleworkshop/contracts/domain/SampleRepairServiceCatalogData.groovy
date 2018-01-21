@@ -1,9 +1,9 @@
 package example.vehicleworkshop.contracts.domain
 
-import groovy.transform.CompileStatic
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber
 import example.vehicleworkshop.sharedkernel.Money
+import groovy.transform.CompileStatic
 
 @CompileStatic
 trait SampleRepairServiceCatalogData {

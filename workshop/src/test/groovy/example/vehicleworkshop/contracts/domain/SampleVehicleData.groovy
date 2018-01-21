@@ -1,8 +1,8 @@
 package example.vehicleworkshop.contracts.domain
 
-import groovy.transform.CompileStatic
 import example.vehicleworkshop.publishedlanguage.VehicleData
 import example.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber
+import groovy.transform.CompileStatic
 
 @CompileStatic
 trait SampleVehicleData {

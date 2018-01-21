@@ -1,8 +1,8 @@
 package example.vehicleworkshop.vehiclecatalog.domain;
 
-import org.springframework.util.ReflectionUtils;
 import example.vehicleworkshop.vehiclecatalog.domain.exceptions.DuplicatedVinException;
 import example.vehicleworkshop.vehiclecatalog.domain.exceptions.VehicleNotFoundException;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;

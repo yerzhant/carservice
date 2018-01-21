@@ -1,8 +1,8 @@
 package example.vehicleworkshop.workersregistry.domain;
 
-import lombok.Getter;
 import example.vehicleworkshop.publishedlanguage.WorkerData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
+import lombok.Getter;
 
 
 @Getter

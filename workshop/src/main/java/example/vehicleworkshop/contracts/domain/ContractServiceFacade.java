@@ -1,7 +1,5 @@
 package example.vehicleworkshop.contracts.domain;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import example.vehicleworkshop.client.domain.ClientServiceFacade;
 import example.vehicleworkshop.contracts.domain.commandmodel.SignContractWithClientRequestDto;
 import example.vehicleworkshop.contracts.domain.readmodel.ClientContractResponseDto;
@@ -15,6 +13,8 @@ import example.vehicleworkshop.publishedlanguage.WorkOrderNumber;
 import example.vehicleworkshop.repairscatalog.domain.RepairsCatalogServiceFacade;
 import example.vehicleworkshop.sharedkernel.Money;
 import example.vehicleworkshop.vehiclecatalog.domain.VehicleServiceFacade;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package example.vehicleworkshop.invoice;
+package example.vehicleworkshop.invoice.domain;
 
 import example.vehicleworkshop.sharedkernel.BaseEntity;
 import example.vehicleworkshop.sharedkernel.Money;
