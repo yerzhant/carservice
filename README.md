@@ -23,9 +23,16 @@ Wykonane naprawy pomniejszają dostępne bezpłatne naprawy, te zapisane w kontr
 
 TODO:
 
+ + rozszerzyć opis domeny. Przyjać założenia/reguły biznesowe - łatwiej wydzielić granice agregatów.
  + rozszerzyc model domenowy
- + dopisac brakujaca logike i testy
- + zastanowic sie nad klasami ContractFreeRepair, ContractPaidRepair - moze wspolna klasa z polem typ
- + zastanowic sie nad bouded contextami (strategic patterns z ddd) (Wtedy klasy beda w pakietach i brak package scope?)
- + czy interfejsy repo nie zrobic jako public i w infrastructure miec implementacje JPA...
+ + zastanowic sie nad komunikacja pomiędzy BC - za dużo klas w pakiecie publishedlanguage
+ + dopisac brakujaca logike i testy (akceptacyjne)
  + brak endpointow
+ + cqrs aby mieć model do odczytu.
+ + Strategic Patternd in DDD ?
+ + Zastanowić się czy agregat w domain może być public.
+ + Utworzyć odpowiednie adnotacje dla bytów domentowych np. Aggregate oraz technicznych
+ + Wystawić interface do repo jako public w domenie.
+ + Zaimplementować BC - invoice(invoicing)
+ + Zdarzenia w obrębie jednego modułu nie mają sensu... (Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder)
+ +
