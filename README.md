@@ -42,3 +42,4 @@ TODO:
  + Zdarzenia w obrębie jednego modułu nie mają sensu... (Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder)
  + Poprawic implementacje zapisu repo w pamieci (Brak nadawania id dla encji w relacji)
  + Dodac JPA mapping
+ + Klasy DomainException i BaseEntity nie powinny być w sharedkernel.

@@ -3,13 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>pl.beck</groupId>
-	<artifactId>vehicle-workshop</artifactId>
+	<groupId>example</groupId>
+	<artifactId>carservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>invoicing</module>
+        <module>workshop</module>
+    </modules>
+    <packaging>pom</packaging>
 
-	<name>vehicle-workshop</name>
-	<description>Zadanie rektutacyjne</description>
+	<name>carservice</name>
+	<description>Example using DDD</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -97,6 +101,9 @@
 
 	</dependencies>
     <build>
+        <finalName>
+            carservice
+        </finalName>
         <plugins>
             <!-- Spring Boot Maven Plugin -->
             <plugin>
