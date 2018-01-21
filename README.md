@@ -1,3 +1,8 @@
+# Example DDD techniques like a Bounded Contexts, building blocks, and Hexagonal architecture, BDD test (Spock framework)
+
+
+
+
 Biznes polega na tym, że istnieje warsztat świadczący usługi naprawy wynajmowanych samochodów.
 Wynajem jest długo terminowy na podstawie kontraktów - umowa papierowa.
 Kontrakt określa:
