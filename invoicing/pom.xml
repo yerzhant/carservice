@@ -12,5 +12,12 @@
     <groupId>example</groupId>
     <artifactId>invoicing</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>example</groupId>
+            <artifactId>sharedkernel</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

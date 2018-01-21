@@ -9,6 +9,7 @@
     <modules>
         <module>invoicing</module>
         <module>workshop</module>
+        <module>sharedkernel</module>
     </modules>
     <packaging>pom</packaging>
 

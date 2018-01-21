@@ -1,6 +1,5 @@
 package example.vehicleworkshop.invoice;
 
-import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
 import example.vehicleworkshop.sharedkernel.Money;
 
@@ -11,8 +10,9 @@ class InvoiceLine extends BaseEntity {
     private Money netto;
 
 
-    public InvoiceLine(Money netto, RepairServiceCatalogData repairService) {
-       // repairService.
+    public InvoiceLine(Money netto, String repairServiceCatalogNumber) {
         this.netto = netto;
     }
+
+    //TODO add implementation
 }
