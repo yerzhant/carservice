@@ -1,14 +1,23 @@
-package example.vehicleworkshop.workorder.domain
+package example.vehicleworkshop.invoice.domain
 
-import example.vehicleworkshop.publishedlanguage.*
+import example.vehicleworkshop.publishedlanguage.ClientData
+import example.vehicleworkshop.publishedlanguage.ContractData
+import example.vehicleworkshop.publishedlanguage.ContractNumber
+import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData
+import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber
+import example.vehicleworkshop.publishedlanguage.VehicleData
+import example.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber
+import example.vehicleworkshop.publishedlanguage.WorkOrderData
+import example.vehicleworkshop.publishedlanguage.WorkOrderNumber
+import example.vehicleworkshop.publishedlanguage.WorkerData
 import example.vehicleworkshop.sharedkernel.Money
+import example.vehicleworkshop.workorder.domain.event.WorkOrderCloseEvent
 import groovy.transform.CompileStatic
 
 import java.time.LocalDateTime
 
 @CompileStatic
-trait SampleWorkOrderData {
-
+trait SampleInvoiceData {
 
     ClientData clientData = new ClientData(1, "89110510533")
 
@@ -39,4 +48,11 @@ trait SampleWorkOrderData {
 
     ContractData contractData =
             new ContractData(clientData.personalNumber, vehicleData.vin.value, new ContractNumber("1"), repairs)
+
+
+    WorkOrderData workOrderData = new WorkOrderData(1, orderCreationTime, new WorkOrderNumber("1"), clientData.personalNumber,
+            workerData.personalNumber, vehicleData.vin.value, "CLOSED")
+
+    WorkOrderCloseEvent workOrderCloseEvent = new WorkOrderCloseEvent(workOrderData)
+
 }

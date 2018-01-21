@@ -1,14 +1,11 @@
 package example.vehicleworkshop.invoice.domain;
 
-import example.events.domain.EventBus;
-import example.events.domain.EventSubscriber;
-import example.vehicleworkshop.invoice.domain.event.WorkOrderCloseEventSubscriber;
+import example.vehicleworkshop.contracts.domain.ContractServiceFacade;
 
 class Configuration {
 
-    InvoiceServiceFacade invoiceServiceFacade() {
-        EventSubscriber eventSubscriber = new WorkOrderCloseEventSubscriber();
-        EventBus.singletonDefaultBus().register(eventSubscriber);
-        return new InvoiceServiceFacade(eventSubscriber, new InvoiceRepositoryInMemoryImpl());
+    InvoiceServiceFacade invoiceServiceFacade(ContractServiceFacade contractServiceFacade) {
+        return new InvoiceServiceFacade(contractServiceFacade, new InvoiceRepositoryInMemoryImpl());
     }
+
 }

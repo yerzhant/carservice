@@ -1,28 +1,32 @@
 package example.vehicleworkshop.invoice.domain;
 
-import example.events.domain.EventSubscriber;
 import example.vehicleworkshop.contracts.domain.ContractServiceFacade;
+import example.vehicleworkshop.publishedlanguage.ContractData;
 import example.vehicleworkshop.publishedlanguage.WorkOrderData;
 import example.vehicleworkshop.workorder.domain.event.WorkOrderCloseEvent;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
+import java.time.LocalDate;
+
 @Slf4j
-public class InvoiceServiceFacade implements EventSubscriber<WorkOrderCloseEvent>{
+public class InvoiceServiceFacade  {
 
     private final ContractServiceFacade contractServiceFacade;
-    private final EventSubscriber workOrderCloseEventSubscriber;
     private final InvoiceRepository invoiceRepository;
 
 
-    @Override
-    public void subscribe(final WorkOrderCloseEvent event) {
-        final WorkOrderData workOrderData = event.getWorkOrderData();
-        //TODO pass more info in evebt or
+    InvoiceServiceFacade(ContractServiceFacade contractServiceFacade, InvoiceRepository invoiceRepository) {
+        this.contractServiceFacade = contractServiceFacade;
+        this.invoiceRepository = invoiceRepository;
     }
 
-    public void issueInvoice(String workOrderNumber) {
+    void issueInvoice(WorkOrderCloseEvent event) {
+        WorkOrderData workOrderData = event.getWorkOrderData();
 
+        String clientPersonalNumber = workOrderData.getClientPersonalNumber();
+        String vin = workOrderData.getVin();
+        LocalDate creationDate = workOrderData.getCreationTime().toLocalDate();
+        ContractData contractData = contractServiceFacade.fetchContractDataByPersonalNumberAndVin(clientPersonalNumber, vin, creationDate, creationDate);
+        // TODO add implementation
     }
 }

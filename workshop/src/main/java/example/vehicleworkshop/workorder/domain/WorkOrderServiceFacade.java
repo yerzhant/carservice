@@ -80,9 +80,8 @@ public class WorkOrderServiceFacade {
 
     public void closeOrder(String workOrderNumber) {
         WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
-        workOder.close();
+        workOder.close(workOrderEventsPublisher);
         workOrderRepository.save(workOder);
-        workOrderEventsPublisher.publishWorkOrderCloseEvent(workOder.getSnapshot());
     }
 
     public WorkOrderData fetchWorkOrderDataByNumber(String workOrderNumber) {

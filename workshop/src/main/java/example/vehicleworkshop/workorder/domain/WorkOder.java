@@ -8,6 +8,7 @@ import example.vehicleworkshop.publishedlanguage.WorkOrderData;
 import example.vehicleworkshop.publishedlanguage.WorkOrderNumber;
 import example.vehicleworkshop.publishedlanguage.WorkerData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
+import example.vehicleworkshop.workorder.domain.event.WorkOrderEventsPublisher;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -47,8 +48,10 @@ class WorkOder extends BaseEntity {
     }
 
     WorkOrderData getSnapshot() {
-        final WorkOrderData workOrderData = new WorkOrderData(id, workOrderNumber, clientData.getPersonalNumber(), workerData.getPersonalNumber(),
-                vehicleData.getVin().getValue(), status.name());
+        final String clientPersonalNumber = clientData.getPersonalNumber();
+        final String workerPersonalNumber = workerData.getPersonalNumber();
+        final WorkOrderData workOrderData = new WorkOrderData(id, creationTime, workOrderNumber, clientPersonalNumber,
+                workerPersonalNumber, vehicleData.getVin().getValue(), status.name());
         items.forEach(item -> workOrderData.addItems(item.getRepairServiceCatalog()));
         return workOrderData;
     }
@@ -68,24 +71,15 @@ class WorkOder extends BaseEntity {
         items.add(new WorkOrderItem(repairServiceCatalogData));
     }
 
-    void close() {
+    void close(WorkOrderEventsPublisher publisher) {
 
         if(items.isEmpty()) {
             throw new UnsupportedOperationException("Order does not contains any repair");
         }
 
         status = WorkOrderStatus.CLOSED;
+        publisher.publishWorkOrderCloseEvent(getSnapshot());
     }
-
-//    void close(WorkOrderCloseEventPublisher publisher) {
-//
-//        if(items.isEmpty()) {
-//            throw new UnsupportedOperationException("Order does not contains any repair");
-//        }
-//
-//        status = WorkOrderStatus.CLOSED;
-//        publisher.publishWorkOrderCloseEvent(new WorkOrderCloseEvent(getSnapshot()));
-//    }
 
 
     private void verifyClient(ContractData contractData) {

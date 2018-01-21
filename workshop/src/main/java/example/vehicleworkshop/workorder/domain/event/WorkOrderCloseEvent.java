@@ -9,7 +9,7 @@ public class WorkOrderCloseEvent extends Event {
 
     private final WorkOrderData workOrderData;
 
-    WorkOrderCloseEvent(WorkOrderData workOrderData) {
+    public WorkOrderCloseEvent(WorkOrderData workOrderData) {
         super(workOrderData.getId());
         this.workOrderData = workOrderData;
     }

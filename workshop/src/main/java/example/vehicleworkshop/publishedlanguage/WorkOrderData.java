@@ -3,6 +3,7 @@ package example.vehicleworkshop.publishedlanguage;
 import lombok.Value;
 
 import javax.persistence.Embeddable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
 public class WorkOrderData {
 
     private Long id;
+
+    private LocalDateTime creationTime;
 
     private WorkOrderNumber workOrderNumber;
 
