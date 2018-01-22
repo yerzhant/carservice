@@ -34,7 +34,7 @@ TODO:
  + dopisac brakujaca logike i testy (akceptacyjne)
  + brak endpointow
  + cqrs aby mieć model do odczytu.
- + Strategic Patternd in DDD ?
+ + Strategic Patterns in DDD ?
  + Zastanowić się czy agregat w domain może być public.
  + Utworzyć odpowiednie adnotacje dla bytów domentowych np. Aggregate oraz technicznych
  + Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder
@@ -44,5 +44,5 @@ TODO:
  + Utworzyc klase AggregateEntity dla agregatów
  + Odseparować proces wystawiania faktury od reszty BC - osobny moduł wtedy jest sens przesyłania eventów.
  + Dopisać wystawianie faktury
- + Logowanie(INFOR/DEBUG/ERROR) Konfiguracja
+ + Logowanie(INFO/DEBUG/ERROR) Konfiguracja
  + Konfiguracja Spring - "technikalia"
