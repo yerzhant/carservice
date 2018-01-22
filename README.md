@@ -44,3 +44,5 @@ TODO:
  + Utworzyc klase AggregateEntity dla agregatów
  + Odseparować proces wystawiania faktury od reszty BC - osobny moduł wtedy jest sens przesyłania eventów.
  + Dopisać wystawianie faktury
+ + Logowanie(INFOR/DEBUG/ERROR) Konfiguracja
+ + Konfiguracja Spring - "technikalia"
