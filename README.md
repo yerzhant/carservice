@@ -47,4 +47,4 @@ TODO:
  + Logowanie(INFO/DEBUG/ERROR) Konfiguracja
  + Konfiguracja Spring - "technikalia"
  + Po wydzieleniu modułu -  invoice , czy powinien być niezależny?
- + zamknięcie zlecenie event jest wysyłany przed zapisem, jak zapis się nie powiedzie?? Czy event będzie mieć sens? 
+ + Zamknięcie zlecenia: event jest wysyłany przed zapisem, jak zapis się nie powiedzie? Czy event będzie mieć sens? 
