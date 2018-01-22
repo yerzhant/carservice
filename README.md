@@ -29,7 +29,7 @@ Wykonane naprawy pomniejszają dostępne bezpłatne naprawy, te zapisane w kontr
 TODO:
 
  + rozszerzyć opis domeny. Przyjać założenia/reguły biznesowe - łatwiej wydzielić granice agregatów.
- + rozszerzyc model domenowy
+ + rozszerzyc model domenowy - moze zmiana bounded contextów(nazwy, granice)
  + zastanowic sie nad komunikacja pomiędzy BC - za dużo klas w pakiecie publishedlanguage
  + dopisac brakujaca logike i testy (akceptacyjne)
  + brak endpointow
@@ -37,10 +37,10 @@ TODO:
  + Strategic Patternd in DDD ?
  + Zastanowić się czy agregat w domain może być public.
  + Utworzyć odpowiednie adnotacje dla bytów domentowych np. Aggregate oraz technicznych
- + Wystawić interface do repo jako public w domenie.
- + Zaimplementować BC - invoice(invoicing)
  + Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder
  + Poprawic implementacje zapisu repo w pamieci (Brak nadawania id dla encji w relacji)
  + Dodac JPA mapping
- + Klasy DomainException i BaseEntity nie powinny być w sharedkernel.
- + Dodac event bus? Przekazanie eventu zamkniecia zlecenia do modulu faktorowania
+ + Klasy DomainException i BaseEntity nie powinny być w sharedkernel. (package support?)
+ + Utworzyc klase AggregateEntity dla agregatów
+ + Odseparować proces wystawiania faktury od reszty BC - osobny moduł wtedy jest sens przesyłania eventów.
+ + Dopisać wystawianie faktury
