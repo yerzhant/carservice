@@ -41,7 +41,7 @@ TODO:
  + Poprawic implementacje zapisu repo w pamieci (Brak nadawania id dla encji w relacji)
  + Dodac JPA mapping
  + Klasy DomainException i BaseEntity nie powinny być w sharedkernel. (package support?)
- + Utworzyc klase AggregateEntity dla agregatów
+ + Utworzyc klase AggregateEntity dla agregatów + klucz
  + Odseparować proces wystawiania faktury od reszty BC - osobny moduł wtedy jest sens przesyłania eventów.
  + Dopisać wystawianie faktury
  + Logowanie(INFO/DEBUG/ERROR) Konfiguracja
