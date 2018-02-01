@@ -1,5 +1,6 @@
 package example.vehicleworkshop.workorder.domain
 
+import example.ddd.domain.BaseAggregateRoot
 import example.vehicleworkshop.publishedlanguage.*
 import example.vehicleworkshop.sharedkernel.Money
 import groovy.transform.CompileStatic
@@ -9,8 +10,8 @@ import java.time.LocalDateTime
 @CompileStatic
 trait SampleWorkOrderData {
 
-
-    ClientData clientData = new ClientData(1, "89110510533")
+    BaseAggregateRoot.AggregateId id = BaseAggregateRoot.AggregateId.generate()
+    ClientData clientData = new ClientData(id, "89110510533")
 
     VehicleIdentificationNumber vehicleIdentificationNumber = new VehicleIdentificationNumber("1HGCR2F53EA275060")
     VehicleData vehicleData = new VehicleData(vehicleIdentificationNumber, "Opel", "Vectra", "PETROL")

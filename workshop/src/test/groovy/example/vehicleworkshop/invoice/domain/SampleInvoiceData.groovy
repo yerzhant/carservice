@@ -1,5 +1,6 @@
 package example.vehicleworkshop.invoice.domain
 
+import example.ddd.domain.BaseAggregateRoot
 import example.vehicleworkshop.publishedlanguage.ClientData
 import example.vehicleworkshop.publishedlanguage.ContractData
 import example.vehicleworkshop.publishedlanguage.ContractNumber
@@ -19,7 +20,8 @@ import java.time.LocalDateTime
 @CompileStatic
 trait SampleInvoiceData {
 
-    ClientData clientData = new ClientData(1, "89110510533")
+    BaseAggregateRoot.AggregateId id = BaseAggregateRoot.AggregateId.generate()
+    ClientData clientData = new ClientData(id, "89110510533")
 
     VehicleIdentificationNumber vehicleIdentificationNumber = new VehicleIdentificationNumber("1HGCR2F53EA275060")
     VehicleData vehicleData = new VehicleData(vehicleIdentificationNumber, "Opel", "Vectra", "PETROL")

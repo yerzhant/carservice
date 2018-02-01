@@ -36,12 +36,11 @@ TODO:
  + cqrs aby mieć model do odczytu.
  + Strategic Patterns in DDD ?
  + Zastanowić się czy agregat w domain może być public.
- + Utworzyć odpowiednie adnotacje dla bytów domentowych np. Aggregate oraz technicznych
+ + Utworzyć odpowiednie adnotacje dla bytów domenowych (ValueObject, DomainFactory etc)
  + Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder
  + Poprawic implementacje zapisu repo w pamieci (Brak nadawania id dla encji w relacji)
  + Dodac JPA mapping
  + Klasy DomainException i BaseEntity nie powinny być w sharedkernel. (package support?)
- + Utworzyc klase AggregateEntity dla agregatów + klucz
  + Odseparować proces wystawiania faktury od reszty BC - osobny moduł wtedy jest sens przesyłania eventów.
  + Dopisać wystawianie faktury
  + Logowanie(INFO/DEBUG/ERROR) Konfiguracja

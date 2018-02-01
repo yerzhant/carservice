@@ -1,5 +1,6 @@
 package example.vehicleworkshop.client.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.client.domain.exceptions.ClientNotFoundException;
 import org.springframework.util.ReflectionUtils;
 
@@ -13,25 +14,14 @@ import static java.util.Objects.requireNonNull;
 
 class ClientRepositoryInMemoryImpl implements ClientRepository {
 
-    private final Map<Long, Client> clients = new ConcurrentHashMap<>();
+    private final Map<BaseAggregateRoot.AggregateId, Client> clients = new ConcurrentHashMap<>();
 
     private final AtomicLong atomicLong = new AtomicLong(1);
 
     @Override
     public void save(final Client client) {
         requireNonNull(client);
-
-        if(client.getId() == null) {
-            findByPersonalNumber(client.getPersonalNumber()).ifPresent(c -> {
-                throw new RuntimeException("Duplicated personalNumber");
-            });
-        }
-
-        final long id = atomicLong.getAndIncrement();
-        final Field id1 = ReflectionUtils.findField(client.getClass(), "id");
-        ReflectionUtils.makeAccessible(id1);
-        ReflectionUtils.setField(id1, client, id);
-        clients.put(client.getId(), client);
+        clients.put(client.getAggregateId(), client);
     }
 
     @Override
@@ -59,6 +49,6 @@ class ClientRepositoryInMemoryImpl implements ClientRepository {
 
     @Override
     public void delete(final Client client) {
-        clients.remove(client.getId());
+        clients.remove(client.getAggregateId());
     }
 }

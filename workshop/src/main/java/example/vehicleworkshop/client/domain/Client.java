@@ -1,5 +1,6 @@
 package example.vehicleworkshop.client.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.client.domain.readmodel.ClientDataResponseDto;
 import example.vehicleworkshop.publishedlanguage.ClientData;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
@@ -8,9 +9,7 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
-class Client extends BaseEntity {
-
-    private Long id;
+class Client extends BaseAggregateRoot {
 
     private String personalNumber;
 
@@ -22,12 +21,12 @@ class Client extends BaseEntity {
     }
 
     ClientData getSnapshot() {
-        return new ClientData(id, personalNumber);
+        return new ClientData(aggregateId, personalNumber);
     }
 
     ClientDataResponseDto toDto() {
         return ClientDataResponseDto.builder()
-                .id(id)
+                .id(aggregateId.toString())
                 .personalNumber(personalNumber)
                 .name(clientDetails.getName())
                 .surName(clientDetails.getSurName())
