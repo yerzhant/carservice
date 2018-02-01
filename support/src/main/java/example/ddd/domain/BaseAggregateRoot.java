@@ -3,6 +3,7 @@ package example.ddd.domain;
 import lombok.Getter;
 
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -15,7 +16,7 @@ public abstract class BaseAggregateRoot {
         this.aggregateId = AggregateId.generate();
     }
 
-    public static class AggregateId {
+    public static class AggregateId implements Serializable {
 
         private final String id;
 
