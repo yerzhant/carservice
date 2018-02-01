@@ -1,14 +1,13 @@
 package example.vehicleworkshop.client.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
+import example.ddd.infrastructure.DomainRepository;
+
 import java.util.Optional;
 
-interface ClientRepository {
+interface ClientRepository extends DomainRepository<Client, BaseAggregateRoot.AggregateId> {
 
     void save(Client client);
-
-    Optional<Client> findOne(Long id);
-
-    Client findOneOrThrow(Long id);
 
     Client findByPersonalNumberOrThrow(String personalNumber);
 

@@ -9,11 +9,13 @@ public interface DomainRepository<T extends BaseAggregateRoot, I extends Seriali
 
     void save(T t);
 
+    void update(T t);
+
     Optional<T> findOne(I id);
 
     default T findOneOrThrow(I id) {
         return findOne(id).orElseThrow(() -> new RepositoryException("Record not found!"));
     }
 
-    void remove(T t);
+    void delete(T t);
 }

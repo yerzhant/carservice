@@ -16,8 +16,6 @@ class ClientRepositoryInMemoryImpl implements ClientRepository {
 
     private final Map<BaseAggregateRoot.AggregateId, Client> clients = new ConcurrentHashMap<>();
 
-    private final AtomicLong atomicLong = new AtomicLong(1);
-
     @Override
     public void save(final Client client) {
         requireNonNull(client);
@@ -25,27 +23,31 @@ class ClientRepositoryInMemoryImpl implements ClientRepository {
     }
 
     @Override
-    public Optional<Client> findOne(final Long id) {
-        return Optional.ofNullable(clients.get(id));
-    }
-
-    @Override
-    public Client findOneOrThrow(final Long id) {
-        return Optional.ofNullable(clients.get(id)).orElseThrow(ClientNotFoundException::new);
-    }
-
-    @Override
     public Client findByPersonalNumberOrThrow(final String personalNumber) {
         return findByPersonalNumber(personalNumber).orElseThrow(ClientNotFoundException::new);
+
     }
 
     @Override
     public Optional<Client> findByPersonalNumber(final String personalNumber) {
         return clients.entrySet().stream()
-                .filter(e -> e.getValue().getPersonalNumber().equals(personalNumber))
                 .map(Map.Entry::getValue)
+                .filter(c -> c.getPersonalNumber().equals(personalNumber))
                 .findFirst();
     }
+
+    @Override
+    public void update(final Client client) {
+        requireNonNull(client);
+        findOneOrThrow(client.getAggregateId());
+        save(client);
+    }
+
+    @Override
+    public Optional<Client> findOne(final BaseAggregateRoot.AggregateId id) {
+        return Optional.ofNullable(clients.get(id));
+    }
+
 
     @Override
     public void delete(final Client client) {

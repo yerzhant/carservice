@@ -1,5 +1,6 @@
 package example.vehicleworkshop.client.domain;
 
+import example.ddd.domain.AggregateRoot;
 import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.client.domain.readmodel.ClientDataResponseDto;
 import example.vehicleworkshop.publishedlanguage.ClientData;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
+@AggregateRoot
 class Client extends BaseAggregateRoot {
 
     private String personalNumber;
