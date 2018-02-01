@@ -1,16 +1,12 @@
 package example.vehicleworkshop.contracts.domain;
 
+import example.ddd.domain.DomainRepository;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-interface ContractRepository {
-
-    void save(Contract contract);
-
-    Optional<Contract> findOne(Long contractId);
-
-    List<Contract> findAll(String personalNumber);
+interface ContractRepository extends DomainRepository<Contract, Contract.AggregateId> {
 
     Contract findByContractNumberOrThrow(String contractNumber);
 
@@ -18,9 +14,6 @@ interface ContractRepository {
 
     Optional<Contract> findByPersonalNumberAndVinForDate(String personalNumber, String vin, LocalDate from, LocalDate to);
 
-    Contract findByVinForDatesOrThrow(String vin, LocalDate from, LocalDate to);
-
     Contract findByPersonalNumberAndVinForDateOrThrow(String personalNumber, String vin, LocalDate from, LocalDate to);
 
-    void delete(Long id);
 }

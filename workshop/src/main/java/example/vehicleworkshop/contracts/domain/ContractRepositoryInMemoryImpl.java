@@ -1,5 +1,6 @@
 package example.vehicleworkshop.contracts.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.contracts.domain.exceptions.ContractNotFoundException;
 import org.springframework.util.ReflectionUtils;
 
@@ -16,41 +17,37 @@ import static java.util.stream.Collectors.toList;
 
 class ContractRepositoryInMemoryImpl implements ContractRepository {
 
-    private Map<Long, Contract> contracts = new ConcurrentHashMap<>();
-
-    private AtomicLong atomicLong = new AtomicLong(1);
+    private Map<BaseAggregateRoot.AggregateId, Contract> contracts = new ConcurrentHashMap<>();
 
     @Override
     public void save(Contract contract) {
         Objects.requireNonNull(contract);
-        if(contract.getId() == null) {
-            long id = atomicLong.getAndIncrement();
-            Field id1 = ReflectionUtils.findField(contract.getClass(), "id");
-            ReflectionUtils.makeAccessible(id1);
-            ReflectionUtils.setField(id1, contract, id);
-            contracts.put(contract.getId(), contract);
-        } else {
-            contracts.put(contract.getId(), contract);
-        }
-
+        contracts.put(contract.getAggregateId(), contract);
     }
 
     @Override
-    public Optional findOne(Long contractId) {
-        return Optional.ofNullable(contracts.get(contractId));
+    public void update(final Contract contract) {
+        Objects.requireNonNull(contract);
+        findOneOrThrow(contract.getAggregateId());
+        save(contract);
     }
 
     @Override
-    public List<Contract> findAll(final String personalNumber) {
-        return contracts.entrySet().stream()
+    public Optional<Contract> findOne(final Contract.AggregateId id) {
+        return contracts.entrySet()
+                .stream()
                 .map(Map.Entry::getValue)
-                .filter(c -> c.getClientData().getPersonalNumber().equals(personalNumber))
-                .collect(toList());
+                .filter(c -> c.getAggregateId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public void delete(final Contract contract) {
+
     }
 
     @Override
     public Contract findByContractNumberOrThrow(String contractNumber) {
-
         return contracts.entrySet().stream()
                 .map(Map.Entry::getValue)
                 .filter(c -> c.getContractNumber().getNumber().equals(contractNumber))
@@ -79,19 +76,8 @@ class ContractRepositoryInMemoryImpl implements ContractRepository {
     }
 
     @Override
-    public Contract findByVinForDatesOrThrow(String vin, LocalDate from, LocalDate to) {
-        return findByVinForDates(vin, from, to)
-                .orElseThrow(ContractNotFoundException::new);
-    }
-
-    @Override
     public Contract findByPersonalNumberAndVinForDateOrThrow(String personalNumber, String vin, LocalDate from, LocalDate to) {
         return findByPersonalNumberAndVinForDate(personalNumber, vin, from, to)
                 .orElseThrow(ContractNotFoundException::new);
-    }
-
-    @Override
-    public void delete(Long id) {
-        contracts.remove(id);
     }
 }

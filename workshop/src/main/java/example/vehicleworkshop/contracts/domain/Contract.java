@@ -1,5 +1,6 @@
 package example.vehicleworkshop.contracts.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.publishedlanguage.ClientData;
 import example.vehicleworkshop.publishedlanguage.ContractData;
 import example.vehicleworkshop.publishedlanguage.ContractNumber;
@@ -20,9 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
-class Contract extends BaseEntity {
-
-    private Long id;
+class Contract extends BaseAggregateRoot {
 
     private ContractNumber contractNumber;
 

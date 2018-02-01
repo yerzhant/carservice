@@ -10,7 +10,7 @@ import java.util.Set;
 @Builder
 public class ClientContractResponseDto {
 
-    private Long id;
+    private String id;
 
     private String conractNumber;
 

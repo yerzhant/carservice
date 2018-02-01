@@ -12,7 +12,7 @@ class ContractMapper {
 
     ClientContractResponseDto mapToDto(Contract contract) {
        return ClientContractResponseDto.builder()
-                .id(contract.getId())
+                .id(contract.getAggregateId().toString())
                 .clientPersonalNumber(contract.getClientData().getPersonalNumber())
                 .vin(contract.getVin().getValue())
                 .conractNumber(contract.getContractNumber().getNumber())
