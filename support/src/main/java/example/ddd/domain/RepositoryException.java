@@ -1,4 +1,4 @@
-package example.ddd.infrastructure;
+package example.ddd.domain;
 
 public class RepositoryException extends RuntimeException {
 

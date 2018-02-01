@@ -1,7 +1,5 @@
 package example.ddd.domain;
 
-import example.ddd.infrastructure.RepositoryException;
-
 import java.io.Serializable;
 import java.util.Optional;
 
