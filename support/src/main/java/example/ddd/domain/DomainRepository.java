@@ -1,6 +1,6 @@
-package example.ddd.infrastructure;
+package example.ddd.domain;
 
-import example.ddd.domain.BaseAggregateRoot;
+import example.ddd.infrastructure.RepositoryException;
 
 import java.io.Serializable;
 import java.util.Optional;

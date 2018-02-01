@@ -1,7 +1,7 @@
 package example.vehicleworkshop.client.domain;
 
 import example.ddd.domain.BaseAggregateRoot;
-import example.ddd.infrastructure.DomainRepository;
+import example.ddd.domain.DomainRepository;
 
 import java.util.Optional;
 
