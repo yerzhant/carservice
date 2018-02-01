@@ -28,7 +28,7 @@ Wykonane naprawy pomniejszają dostępne bezpłatne naprawy, te zapisane w kontr
 
 TODO:
  + zastanowic się na package scope czy ma sens? Może tylko Agregat publiczny + Fabryka...
- + rozszerzyć opis domeny. Przyjać założenigit a/reguły biznesowe - łatwiej wydzielić granice agregatów.
+ + rozszerzyć opis domeny. Przyjać założenia/reguły biznesowe - łatwiej wydzielić granice agregatów.
  + rozszerzyc model domenowy - moze zmiana bounded contextów(nazwy, granice)
  + zastanowic sie nad komunikacja pomiędzy BC - za dużo klas w pakiecie publishedlanguage
  + dopisac brakujaca logike i testy (akceptacyjne)
@@ -38,7 +38,8 @@ TODO:
  + Zastanowić się czy agregat w domain może być public.
  + Utworzyć odpowiednie adnotacje dla bytów domenowych (ValueObject, DomainFactory etc)
  + Zapis dwóch agregatów per transakcja... WorkOrderServiceFacade    addRepairToOrder
- + Poprawic implementacje zapisu repo w pamieci (Brak nadawania id dla encji w relacji)
+ + Poprawic implementacje zapisu repo w pamieci
+ + Brak fabryk
  + Dodac JPA mapping
  + Klasy DomainException i BaseEntity nie powinny być w sharedkernel. (package support?)
  + Odseparować proces wystawiania faktury od reszty BC - osobny moduł wtedy jest sens przesyłania eventów.
