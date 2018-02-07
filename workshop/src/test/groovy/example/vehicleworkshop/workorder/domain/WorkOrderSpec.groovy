@@ -26,7 +26,7 @@ class WorkOrderSpec extends Specification implements SampleWorkOrderData {
 
     def setup() {
 
-        and: "system has client"
+        "system has client"
         clientServiceFacade.fetchClientData(clientData.personalNumber) >> {
             clientData
         }
