@@ -80,7 +80,7 @@ public class WorkOrderServiceFacade {
 
     public void closeOrder(String workOrderNumber) {
         WorkOder workOder = workOrderRepository.findOneByWorkOrderNumberOrThrow(workOrderNumber);
-        workOder.close(workOrderEventsPublisher);                                                                       //TODO wyslanie eventu przed zapisem... sens jak do innego modułu... przemyslec
+        workOder.close(workOrderEventsPublisher);                                                                       //TODO zrezygnowac z eventu.
         workOrderRepository.save(workOder);
     }
 

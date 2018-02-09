@@ -45,3 +45,6 @@ public class WorkOrderData {
         return Collections.unmodifiableList(items);
     }
 }
+
+
+//TODO czy ten obiekt ma sens?
