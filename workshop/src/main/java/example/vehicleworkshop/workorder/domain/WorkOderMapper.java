@@ -18,7 +18,7 @@ class WorkOderMapper {
                 .creationTime(workOder.getCreationTime())
                 .number(workOder.getWorkOrderNumber().getNumber())
                 .status(workOder.getStatus().name())
-                .id(workOder.getId())
+                .id(workOder.getAggregateId().toString())
                 .items(mapWorkOrderItemsToDto(workOder.getItems()))
                 .build();
 

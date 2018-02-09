@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 public class WorkOrderResponseDto {
 
-    private Long id;
+    private String id;
 
     private LocalDateTime creationTime;
 

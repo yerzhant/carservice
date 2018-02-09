@@ -1,5 +1,6 @@
 package example.vehicleworkshop.publishedlanguage;
 
+import example.ddd.domain.BaseAggregateRoot;
 import lombok.Value;
 
 import javax.persistence.Embeddable;
@@ -12,7 +13,7 @@ import java.util.List;
 @Embeddable
 public class WorkOrderData {
 
-    private Long id;
+    private BaseAggregateRoot.AggregateId id;
 
     private LocalDateTime creationTime;
 

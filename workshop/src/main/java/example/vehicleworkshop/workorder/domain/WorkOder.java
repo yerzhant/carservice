@@ -1,5 +1,6 @@
 package example.vehicleworkshop.workorder.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.publishedlanguage.ClientData;
 import example.vehicleworkshop.publishedlanguage.ContractData;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
@@ -18,9 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Getter
-class WorkOder extends BaseEntity {
-
-    private Long id;
+class WorkOder extends BaseAggregateRoot {
 
     private LocalDateTime creationTime = LocalDateTime.now();
 
@@ -50,7 +49,7 @@ class WorkOder extends BaseEntity {
     WorkOrderData getSnapshot() {
         final String clientPersonalNumber = clientData.getPersonalNumber();
         final String workerPersonalNumber = workerData.getPersonalNumber();
-        final WorkOrderData workOrderData = new WorkOrderData(id, creationTime, workOrderNumber, clientPersonalNumber,
+        final WorkOrderData workOrderData = new WorkOrderData(aggregateId, creationTime, workOrderNumber, clientPersonalNumber,
                 workerPersonalNumber, vehicleData.getVin().getValue(), status.name());
         items.forEach(item -> workOrderData.addItems(item.getRepairServiceCatalog()));
         return workOrderData;

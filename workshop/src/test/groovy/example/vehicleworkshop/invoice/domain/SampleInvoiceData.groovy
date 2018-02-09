@@ -20,8 +20,8 @@ import java.time.LocalDateTime
 @CompileStatic
 trait SampleInvoiceData {
 
-    BaseAggregateRoot.AggregateId id = BaseAggregateRoot.AggregateId.generate()
-    ClientData clientData = new ClientData(id, "89110510533")
+    BaseAggregateRoot.AggregateId clientId = BaseAggregateRoot.AggregateId.generate()
+    ClientData clientData = new ClientData(clientId, "89110510533")
 
     VehicleIdentificationNumber vehicleIdentificationNumber = new VehicleIdentificationNumber("1HGCR2F53EA275060")
     VehicleData vehicleData = new VehicleData(vehicleIdentificationNumber, "Opel", "Vectra", "PETROL")
@@ -51,8 +51,8 @@ trait SampleInvoiceData {
     ContractData contractData =
             new ContractData(clientData.personalNumber, vehicleData.vin.value, new ContractNumber("1"), repairs)
 
-
-    WorkOrderData workOrderData = new WorkOrderData(1, orderCreationTime, new WorkOrderNumber("1"), clientData.personalNumber,
+    BaseAggregateRoot.AggregateId workOrderId = BaseAggregateRoot.AggregateId.generate()
+    WorkOrderData workOrderData = new WorkOrderData(workOrderId, orderCreationTime, new WorkOrderNumber("1"), clientData.personalNumber,
             workerData.personalNumber, vehicleData.vin.value, "CLOSED")
 
     WorkOrderCloseEvent workOrderCloseEvent = new WorkOrderCloseEvent(workOrderData)
