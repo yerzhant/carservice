@@ -1,5 +1,6 @@
 package example.vehicleworkshop.repairscatalog.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.repairscatalog.domain.exceptions.RepairCatalogNotFoundException;
 import org.springframework.util.ReflectionUtils;
 
@@ -13,23 +14,34 @@ import java.util.concurrent.atomic.AtomicLong;
 class RepairsCatalogInMemoryImpl implements RepairsCatalogRepository {
 
 
-    private final Map<Long, RepairsCatalog> catalog = new ConcurrentHashMap<>();
-
-    private final AtomicLong atomicLong = new AtomicLong(1);
+    private final Map<BaseAggregateRoot.AggregateId, RepairsCatalog> catalog = new ConcurrentHashMap<>();
 
 
     @Override
     public void save(RepairsCatalog repairsCatalog) {
         Objects.requireNonNull(repairsCatalog);
-        if (repairsCatalog.getId() == null) {
-            final long id = atomicLong.getAndIncrement();
-            final Field id1 = ReflectionUtils.findField(repairsCatalog.getClass(), "id");
-            ReflectionUtils.makeAccessible(id1);
-            ReflectionUtils.setField(id1, repairsCatalog, id);
-            catalog.put(repairsCatalog.getId(), repairsCatalog);
-        } else {
-            catalog.put(repairsCatalog.getId(), repairsCatalog);
-        }
+        catalog.put(repairsCatalog.getAggregateId(), repairsCatalog);
+    }
+
+    @Override
+    public void update(final RepairsCatalog repairsCatalog) {
+        Objects.requireNonNull(repairsCatalog);
+        findOneOrThrow(repairsCatalog.getAggregateId());
+        save(repairsCatalog);
+    }
+
+    @Override
+    public Optional<RepairsCatalog> findOne(final BaseAggregateRoot.AggregateId id) {
+        return catalog.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .filter(v -> v.getAggregateId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public void delete(final RepairsCatalog repairsCatalog) {
+        Objects.requireNonNull(repairsCatalog);
+        catalog.remove(repairsCatalog.getAggregateId());
     }
 
     @Override

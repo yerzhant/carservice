@@ -1,5 +1,6 @@
 package example.vehicleworkshop.repairscatalog.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogData;
 import example.vehicleworkshop.publishedlanguage.RepairServiceCatalogNumber;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
@@ -9,9 +10,7 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
-class RepairsCatalog extends BaseEntity {
-
-    private Long id;
+class RepairsCatalog extends BaseAggregateRoot {
 
     private RepairServiceCatalogNumber number;
 

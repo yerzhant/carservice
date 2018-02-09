@@ -1,11 +1,12 @@
 package example.vehicleworkshop.repairscatalog.domain;
 
 
+import example.ddd.domain.BaseAggregateRoot;
+import example.ddd.domain.DomainRepository;
+
 import java.util.Optional;
 
-interface RepairsCatalogRepository {
-
-    void save(RepairsCatalog repairsCatalog);
+interface RepairsCatalogRepository extends DomainRepository<RepairsCatalog, BaseAggregateRoot.AggregateId> {
 
     Optional<RepairsCatalog> findByCatalogNumber(String catalogNumber);
 
