@@ -27,10 +27,11 @@ Wykonane naprawy pomniejszają dostępne bezpłatne naprawy, te zapisane w kontr
 
 
 TODO:
+ + Refaktoryzacja!!! BaseAggregateRoot - dodac jaka klase nadrzedna dla agreagatow.
+ + zastanowic sie nad komunikacja pomiędzy BC - za dużo klas w pakiecie publishedlanguage/zle bounded contexty...
  + zastanowic się na package scope czy ma sens? Może tylko Agregat publiczny + Fabryka...
  + rozszerzyć opis domeny. Przyjać założenia/reguły biznesowe - łatwiej wydzielić granice agregatów.
  + rozszerzyc model domenowy - moze zmiana bounded contextów(nazwy, granice)
- + zastanowic sie nad komunikacja pomiędzy BC - za dużo klas w pakiecie publishedlanguage
  + dopisac brakujaca logike i testy (akceptacyjne)
  + brak endpointow
  + cqrs aby mieć model do odczytu.
