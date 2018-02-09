@@ -1,5 +1,6 @@
 package example.vehicleworkshop.vehiclecatalog.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.vehiclecatalog.domain.exceptions.DuplicatedVinException;
 import example.vehicleworkshop.vehiclecatalog.domain.exceptions.VehicleNotFoundException;
 import org.springframework.util.ReflectionUtils;
@@ -15,36 +16,29 @@ import static java.util.Objects.requireNonNull;
 class VehicleRepositoryInMemoryImpl implements VehicleRepository {
 
 
-    private final Map<Long, Vehicle> vehicles = new ConcurrentHashMap<>();
-
-    private final AtomicLong atomicLong = new AtomicLong(1);
+    private final Map<BaseAggregateRoot.AggregateId, Vehicle> vehicles = new ConcurrentHashMap<>();
 
     @Override
     public void save(Vehicle vehicle) {
         requireNonNull(vehicle);
-
-        if(vehicle.getId() == null) {
-            findByVin(vehicle.getVin().getValue()).ifPresent(v -> {
-                throw new DuplicatedVinException();
-            });
-
-
-            final long id = atomicLong.getAndIncrement();
-
-            final Field id1 = ReflectionUtils.findField(vehicle.getClass(), "id");
-            ReflectionUtils.makeAccessible(id1);
-            ReflectionUtils.setField(id1, vehicle, id);
-            vehicles.put(vehicle.getId(), vehicle);
-        } else {
-            vehicles.put(vehicle.getId(), vehicle);
-        }
-
+        vehicles.put(vehicle.getAggregateId(), vehicle);
     }
 
     @Override
-    public Optional<Vehicle> findOne(Long id) {
-        return Optional.ofNullable(vehicles.get(id));
+    public void update(final Vehicle vehicle) {
+        requireNonNull(vehicle);
+        findOneOrThrow(vehicle.getAggregateId());
+        save(vehicle);
     }
+
+    @Override
+    public Optional<Vehicle> findOne(final BaseAggregateRoot.AggregateId id) {
+        return vehicles.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .filter(v -> v.getAggregateId().equals(id))
+                .findFirst();
+    }
+
 
     @Override
     public Optional<Vehicle> findByVin(final String vin) {
@@ -61,6 +55,6 @@ class VehicleRepositoryInMemoryImpl implements VehicleRepository {
 
     @Override
     public void delete(Vehicle vehicle) {
-        vehicles.remove(vehicle.getId());
+        vehicles.remove(vehicle.getAggregateId());
     }
 }

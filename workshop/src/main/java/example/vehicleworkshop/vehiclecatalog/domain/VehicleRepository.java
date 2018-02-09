@@ -1,17 +1,14 @@
 package example.vehicleworkshop.vehiclecatalog.domain;
 
 
+import example.ddd.domain.BaseAggregateRoot;
+import example.ddd.domain.DomainRepository;
+
 import java.util.Optional;
 
-interface VehicleRepository {
-
-    void save(Vehicle vehicle);
-
-    Optional<Vehicle> findOne(Long id);
+interface VehicleRepository extends DomainRepository<Vehicle, BaseAggregateRoot.AggregateId> {
 
     Optional<Vehicle> findByVin(String vin);
 
     Vehicle findByVinOrThrow(String vin);
-
-    void delete(Vehicle client);
 }

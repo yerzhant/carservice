@@ -1,14 +1,13 @@
 package example.vehicleworkshop.vehiclecatalog.domain;
 
+import example.ddd.domain.BaseAggregateRoot;
 import example.vehicleworkshop.publishedlanguage.VehicleData;
 import example.vehicleworkshop.publishedlanguage.VehicleIdentificationNumber;
 import example.vehicleworkshop.sharedkernel.BaseEntity;
 import lombok.Getter;
 
 @Getter
-class Vehicle extends BaseEntity {
-
-    private Long id;
+class Vehicle extends BaseAggregateRoot {
 
     private final VehicleIdentificationNumber vin;
 
@@ -25,4 +24,4 @@ class Vehicle extends BaseEntity {
 }
 
 
-//TODO add implementation extends BaseEntity, fields etc. Car - better name?
+//TODO implementation, invariants, business rules, now is not aggreagate.
